@@ -1,0 +1,43 @@
+<h1>{{bookmarksListCtrl.currentCategoryName}}</h1>
+<div ng-repeat="bookmark in bookmarksListCtrl.bookmarks | filter:{category:currentCategory.name}" ng-class="{'active':isSelectedBookmark(bookmark.id)}">
+    <button type="button" class="close" ng-click="removeBookmark(bookmark)">&times;</button>
+    <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-pencil" ng-click="startEditing(bookmark)"></span></button>
+    <a href="{{bookmark.url}}" target="_blank">{{bookmark.title}}</a>
+</div>
+<hr />
+<!-- CREATING -->
+<div>
+    <button type="button" class="btn btn-link" ng-click="startCreating()" ng-if="!isCreating && !isEditing && currentCategory">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Create Bookmark
+                    </button>
+    <form class="create-form" role="form" novalidate ng-if="shouldShowCreating()" ng-submit="addBookmark(newBookmark)">
+        <div class="form-group">
+            <label for="newBookmarkTitle">Bookmark Title</label>
+            <input ng-model="newBookmark.title" type="text" class="form-control" id="newBookmarkTitle" placeholder="Enter title">
+        </div>
+        <div class="form-group">
+            <label for="newBookmarkURL">Bookmark URL</label>
+            <input ng-model="newBookmark.url" type="text" class="form-control" id="newBookmarkURL" placeholder="Enter URL">
+        </div>
+        <button type="submit" class="btn btn-info btn-lg">Create</button>
+        <button type="button" class="btn btn-default btn-lg pull-right" ng-click="cancelCreating()">Cancel</button>
+    </form>
+</div>
+<!-- EDITING -->
+<div ng-if="shouldShowEditing()" ng-submit="updateBookmark(editedBookmark)">
+    <h4>Editing {{editedBookmark.title}}</h4>
+
+    <form class="edit-form" role="form" novalidate>
+        <div class="form-group">
+            <label>Bookmark Title</label>
+            <input ng-model="editedBookmark.title" type="text" class="form-control" placeholder="Enter title">
+        </div>
+        <div class="form-group">
+            <label>Bookmark URL</label>
+            <input ng-model="editedBookmark.url" type="text" class="form-control" placeholder="Enter URL">
+        </div>
+        <button type="submit" class="btn btn-info btn-lg">Save</button>
+        <button type="button" class="btn btn-default btn-lg pull-right" ng-click="cancelEditing()">Cancel</button>
+    </form>
+</div>
