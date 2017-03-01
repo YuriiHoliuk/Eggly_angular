@@ -18,8 +18,21 @@ angular.module('categories.bookmarks', [
         })
 })
 
-.controller('BookmarksListCtrl', function BookmarksListCtrl($scope, $stateParams, BookmarksModel) {
+.controller('BookmarksListCtrl', function BookmarksListCtrl($scope, $stateParams, BookmarksModel, CategoriesModel) {
     var bookmarksListCtrl = this;
-    bookmarksListCtrl.currentCategoryName = $stateParams.category;
-    bookmarksListCtrl.bookmarks = BookmarksModel.getBookmarks();
+
+    CategoriesModel.setCurrentCategory($stateParams.category);
+
+    BookmarksModel.getBookmarks()
+        .then(function(bookmarks) {
+            bookmarksListCtrl.bookmarks = bookmarks;
+        });
+
+    bookmarksListCtrl.getCurrentCategory = CategoriesModel.getCurrentCategory;
+    bookmarksListCtrl.getCurrentCategoryName = CategoriesModel.getCurrentCategoryName;
+    bookmarksListCtrl.deleteBookmark = BookmarksModel.deleteBookmark;
+
+    bookmarksListCtrl.getCurrentBookmarkId = function() {
+        return $stateParams.bookmarkId;
+    }
 });

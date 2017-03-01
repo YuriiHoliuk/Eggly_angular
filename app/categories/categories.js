@@ -13,7 +13,7 @@
                  },
                  'bookmarks@': {
                      templateUrl: 'app/categories/bookmarks/bookmarks.tmpl.html',
-                     controller: 'BookmarksListCtrl'
+                     controller: 'BookmarksListCtrl as bookmarksListCtrl'
                  }
              }
          })
@@ -21,5 +21,10 @@
 
  .controller('CategoriesListCtrl', function CategoriesListCtrl($scope, CategoriesModel) {
      var categoriesListCtrl = this;
-     categoriesListCtrl.categories = CategoriesModel.getCategories();
+     CategoriesModel.getCategories()
+         .then(function(result) {
+             categoriesListCtrl.categories = result;
+         });
+
+     categoriesListCtrl.getCurrentCategoryName = CategoriesModel.getCurrentCategoryName;
  });

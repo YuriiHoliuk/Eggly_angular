@@ -1,5 +1,6 @@
 angular.module('Eggly', [
     'ui.router',
+    'ngAnimate',
     'categories',
     'categories.bookmarks'
 ])
@@ -21,131 +22,126 @@ angular.module('Eggly', [
     // });
 })
 
-.controller('MainCtrl', function($scope, $state) {
+// .controller('MainCtrl', function($scope, $state) {
 
-    //-------------------------------------------------------------------------------------------------
-    // MODEL
-    //-------------------------------------------------------------------------------------------------
+//     //-------------------------------------------------------------------------------------------------
+//     // CURRENT ELEMENT
+//     //-------------------------------------------------------------------------------------------------
 
+//     $scope.currentCategory = null;
 
+//     function setCurrentCategory(category) {
+//         $scope.currentCategory = category;
 
-    //-------------------------------------------------------------------------------------------------
-    // CURRENT ELEMENT
-    //-------------------------------------------------------------------------------------------------
+//         // $state.go('eggly.categories.bookmarks', { category: category.name })
 
-    $scope.currentCategory = null;
+//         cancelCreating();
+//         cancelEditing();
+//     }
 
-    function setCurrentCategory(category) {
-        $scope.currentCategory = category;
+//     function isCurrentCategory(category) {
+//         return $scope.currentCategory !== null && $scope.currentCategory.name === category.name;
+//     }
 
-        // $state.go('eggly.categories.bookmarks', { category: category.name })
+//     function isSelectedBookmark(bookmarkId) {
+//         return $scope.isEditing && $scope.editedBookmark.id === bookmarkId;
+//     }
 
-        cancelCreating();
-        cancelEditing();
-    }
+//     $scope.setCurrentCategory = setCurrentCategory;
+//     $scope.isCurrentCategory = isCurrentCategory;
+//     $scope.isSelectedBookmark = isSelectedBookmark;
 
-    function isCurrentCategory(category) {
-        return $scope.currentCategory !== null && $scope.currentCategory.name === category.name;
-    }
+//     //-------------------------------------------------------------------------------------------------
+//     // CREATING AND EDITING STATES
+//     //-------------------------------------------------------------------------------------------------
 
-    function isSelectedBookmark(bookmarkId) {
-        return $scope.isEditing && $scope.editedBookmark.id === bookmarkId;
-    }
+//     $scope.isCreating = false;
+//     $scope.isEditing = false;
 
-    $scope.setCurrentCategory = setCurrentCategory;
-    $scope.isCurrentCategory = isCurrentCategory;
-    $scope.isSelectedBookmark = isSelectedBookmark;
+//     function startCreating() {
+//         $scope.isCreating = true;
+//         $scope.isEditing = false;
+//     }
 
-    //-------------------------------------------------------------------------------------------------
-    // CREATING AND EDITING STATES
-    //-------------------------------------------------------------------------------------------------
+//     function startEditing(bookmark) {
+//         $scope.isCreating = false;
+//         $scope.isEditing = true;
 
-    $scope.isCreating = false;
-    $scope.isEditing = false;
+//         setEditedBookmark(bookmark);
+//     }
 
-    function startCreating() {
-        $scope.isCreating = true;
-        $scope.isEditing = false;
-    }
+//     function cancelCreating() {
+//         $scope.isCreating = false;
+//     }
 
-    function startEditing(bookmark) {
-        $scope.isCreating = false;
-        $scope.isEditing = true;
+//     function cancelEditing() {
+//         $scope.isEditing = false;
+//     }
 
-        setEditedBookmark(bookmark);
-    }
+//     function shouldShowCreating() {
+//         return $scope.currentCategory && !$scope.isEditing && $scope.isCreating;
+//     }
 
-    function cancelCreating() {
-        $scope.isCreating = false;
-    }
+//     function shouldShowEditing() {
+//         return $scope.isEditing && !$scope.isCreating;
+//     }
 
-    function cancelEditing() {
-        $scope.isEditing = false;
-    }
+//     $scope.startCreating = startCreating;
+//     $scope.startEditing = startEditing;
+//     $scope.cancelCreating = cancelCreating;
+//     $scope.cancelEditing = cancelEditing;
+//     $scope.shouldShowCreating = shouldShowCreating;
+//     $scope.shouldShowEditing = shouldShowEditing;
 
-    function shouldShowCreating() {
-        return $scope.currentCategory && !$scope.isEditing && $scope.isCreating;
-    }
+//     //-------------------------------------------------------------------------------------------------
+//     // CRED
+//     //-------------------------------------------------------------------------------------------------
 
-    function shouldShowEditing() {
-        return $scope.isEditing && !$scope.isCreating;
-    }
+//     //Creating
 
-    $scope.startCreating = startCreating;
-    $scope.startEditing = startEditing;
-    $scope.cancelCreating = cancelCreating;
-    $scope.cancelEditing = cancelEditing;
-    $scope.shouldShowCreating = shouldShowCreating;
-    $scope.shouldShowEditing = shouldShowEditing;
+//     function addBookmark(bookmark) {
+//         bookmark.id = $scope.bookmarks.length;
+//         bookmark.category = $scope.currentCategory.name;
 
-    //-------------------------------------------------------------------------------------------------
-    // CRED
-    //-------------------------------------------------------------------------------------------------
+//         $scope.bookmarks.push(bookmark);
 
-    //Creating
+//         $scope.newBookmark = {
+//             title: '',
+//             url: ''
+//         };
 
-    function addBookmark(bookmark) {
-        bookmark.id = $scope.bookmarks.length;
-        bookmark.category = $scope.currentCategory.name;
+//         cancelCreating();
+//     }
 
-        $scope.bookmarks.push(bookmark);
+//     $scope.addBookmark = addBookmark;
 
-        $scope.newBookmark = {
-            title: '',
-            url: ''
-        };
+//     //Editing
 
-        cancelCreating();
-    }
+//     function setEditedBookmark(bookmark) {
+//         $scope.editedBookmark = angular.copy(bookmark);
+//     }
 
-    $scope.addBookmark = addBookmark;
+//     function updateBookmark(bookmark) {
+//         var index = _.findIndex($scope.bookmarks, function(b) {
+//             return b.id === bookmark.id;
+//         });
 
-    //Editing
+//         $scope.bookmarks[index] = bookmark;
 
-    function setEditedBookmark(bookmark) {
-        $scope.editedBookmark = angular.copy(bookmark);
-    }
+//         $scope.editedBookmark = null;
+//         $scope.isEditing = false;
+//     }
 
-    function updateBookmark(bookmark) {
-        var index = _.findIndex($scope.bookmarks, function(b) {
-            return b.id === bookmark.id;
-        });
+//     $scope.updateBookmark = updateBookmark;
 
-        $scope.bookmarks[index] = bookmark;
+//     //Deleting
 
-        $scope.editedBookmark = null;
-        $scope.isEditing = false;
-    }
+//     function removeBookmark(bookmark) {
+//         _.remove($scope.bookmarks, function(b) {
+//             return b.id === bookmark.id;
+//         });
+//     }
 
-    $scope.updateBookmark = updateBookmark;
-
-    //Deleting
-
-    function removeBookmark(bookmark) {
-        _.remove($scope.bookmarks, function(b) {
-            return b.id === bookmark.id;
-        });
-    }
-
-    $scope.removeBookmark = removeBookmark;
-});
+//     $scope.removeBookmark = removeBookmark;
+// })
+;

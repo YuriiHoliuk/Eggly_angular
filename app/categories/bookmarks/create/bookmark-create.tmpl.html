@@ -1,0 +1,12 @@
+<form class="create-form" role="form" novalidate ng-submit="bookmarksCreateCtrl.createBookmark()">
+    <div class="form-group">
+        <label for="newBookmarkTitle">Bookmark Title</label>
+        <input ng-model="bookmarksCreateCtrl.newBookmark.title" type="text" class="form-control" id="newBookmarkTitle" placeholder="Enter title">
+    </div>
+    <div class="form-group">
+        <label for="newBookmarkURL">Bookmark URL</label>
+        <input ng-model="bookmarksCreateCtrl.newBookmark.url" type="text" class="form-control" id="newBookmarkURL" placeholder="Enter URL">
+    </div>
+    <button type="submit" class="btn btn-info btn-lg">Create</button>
+    <button type="button" class="btn btn-default btn-lg pull-right" ng-click="bookmarksCreateCtrl.cancelCreating()">Cancel</button>
+</form>
